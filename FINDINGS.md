@@ -83,18 +83,32 @@ finding: the library everyone forked *away* from is the only one that fails loud
 
 **Ask:** warn or throw when a glyph is not representable in the selected font.
 
-### S2 — No tested library can emit an accessible document
+### S2 — One of four can tag; three cannot (corrected)
 
-None emits `/StructTreeRoot`, `/MarkInfo`, `/Lang`, `/Title` or `/Alt`, and none
-exposes a tagging API. `pdfkit` also has no AcroForm API.
+**Superseded claim:** "No tested library can emit an accessible document." That was
+produced by a capability probe that asserted `'no API'` from a hardcoded list
+instead of attempting anything. It was wrong.
 
-Read from raw bytes with a regex — no referee involved, so no interpretation. These
-are the machine-checkable prerequisites, not a PDF/UA verdict: without them
-conformance is impossible by construction.
+Measured by attempting the documented call and scanning the produced bytes:
 
-**Caveat that must travel with this claim:** these are *direct API* probes. A
-library that needs a plugin to tag output is scored `no API`, which means "not out
-of the box", never "impossible". Check for an extension package before filing.
+| | pdf-lib | @cantoo/pdf-lib | pdfkit | jspdf |
+|---|---|---|---|---|
+| tagging | no API | no API | **yes** (`{ tagged: true }` → `/StructTreeRoot`, `/MarkInfo`, `/Lang`) | no API |
+| encryption | no API | no API | **yes** → `/Encrypt` | **yes** → `/Encrypt` |
+| AcroForm | yes | yes | yes (needs `initForm()` first) | inconclusive |
+
+The corrected claim is narrower and more interesting: **the only library of the four
+with tagging machinery ships it off by default**, and the two `pdf-lib` variants
+have no path to it at all.
+
+Two false results were produced on the way to this table, both by the harness rather
+than the libraries: `pdf-lib` was briefly scored as encryption-capable because it
+exports `EncryptedPDFError` and `isEncrypted` (reader-side helpers), and `pdfkit` was
+briefly scored as form-less because the attempt omitted the required `initForm()`
+call. Both are now pinned by tests in `test/capabilities.test.js`.
+
+What remains solid: no library sets a document title or alt text without being given
+the content, and none of these checks substitutes for a PDF/UA verdict.
 
 ---
 

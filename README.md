@@ -48,29 +48,43 @@ finding: the library everyone forked *away* from is the only one that fails loud
 A thrown error is a bug you find in five minutes; a PDF that prints as empty boxes
 on an invoice is a bug you find from a customer.
 
-### Solid: none of them can produce an accessible document
+### Only one of four can emit a tagged document — and not the one you'd guess
 
-Zero of three emit a structure tree, marked content, document language, title or
-alt text, and none exposes a tagging API. Read from raw bytes, no referee involved.
+Capabilities below are **measured by attempting the documented call and looking for
+the marker in the produced bytes**, not by reading API names. That distinction has
+already changed the answer twice: `pdf-lib` exports `EncryptedPDFError` and
+`isEncrypted` (a *reader's* helpers) which a name scan reports as encryption
+support, and `pdfkit` genuinely can tag — which an earlier version of this README
+denied outright.
 
-| property | pdf-lib | @cantoo/pdf-lib | pdfkit |
-|---|---|---|---|
-| structure tree (`/StructTreeRoot`) | no | no | no |
-| marked content (`/MarkInfo`) | no | no | no |
-| document language (`/Lang`) | no | no | no |
-| document title (`/Title`) | no | no | no |
-| alt text (`/Alt`) | no | no | no |
-| tagging API | no API | no API | no API |
-| encryption API | no API | no API | no API |
-| AcroForm API | yes | yes | no API |
-| font subsetting | ok | ok | n/a (default font) |
-| fontkit used | `@pdf-lib/fontkit@1.1.1` | `fontkit@2.0.4` | — |
-| file size (1 page) | 9.4 KB | 9.4 KB | 9.6 KB |
+| property | pdf-lib | @cantoo/pdf-lib | pdfkit | jspdf |
+|---|---|---|---|---|
+| structure tree (`/StructTreeRoot`) | no | no | no | no |
+| marked content (`/MarkInfo`) | no | no | no | no |
+| document language (`/Lang`) | no | no | no | no |
+| document title (`/Title`) | no | no | no | no |
+| alt text (`/Alt`) | no | no | no | no |
+| **tagging API** | no API | no API | **yes** | no API |
+| **encryption API** | no API | no API | **yes** | **yes** |
+| AcroForm API | yes | yes | yes | inconclusive |
+| embedded font | yes | yes | yes | yes |
+| fontkit used | `@pdf-lib/fontkit@1.1.1` | `@cantoo/fontkit@2.0.12` | n/a | n/a |
+| file size (1 page) | 9.4 KB | 9.4 KB | 9.6 KB | — |
 
-Not a PDF/UA verdict — a document can carry all of these and still fail. These are
-the triage gate, and generate a PDF with any of these three today and it cannot
-conform, by construction. Read the API rows as "not out of the box"; a library that
-needs a plugin to tag output is scored `no API`, not `impossible`.
+The structure columns read `no` because they describe a *default* one-page document
+with one line of text. `pdfkit` can turn tagging on: `new PDFDocument({ tagged: true })`
+produces `/StructTreeRoot` and `/MarkInfo`, and adding `lang` produces `/Lang`.
+None of that is on by default, none of it is reachable through `pdf-lib` or `jsPDF`
+in this test, and no library sets a title or alt text without being given the content.
+
+So the honest claim is narrower and more useful than "they can't": **one of the four
+has the machinery and ships it off.** The other three would need features they do
+not have.
+
+Not a PDF/UA verdict — a document can carry all of these and still fail, because
+reading order and correct alt text need a human. This is the triage gate.
+`inconclusive` means the API exists but the attempt produced no marker, which is a
+limit of this harness, not a verdict on the library.
 
 ### Retracted: "the fork breaks font subsetting"
 
@@ -148,41 +162,54 @@ characters survived but reordered · `partial` ≥50% survived · `lossy` <50% �
 
 ### Default font
 
-| script | pdf-lib | @cantoo/pdf-lib | pdfkit |
-|---|---|---|---|
-| Arabic | **error** | lossy | lossy |
-| Arabic (mixed) | **error** | lossy | lossy |
-| Bidi: Arabic + Latin | **error** | partial | partial |
-| Bidi: Hebrew + Latin | **error** | partial | partial |
-| Hebrew | **error** | lossy | lossy |
-| Devanagari | **error** | lossy | lossy |
-| Thai | **error** | lossy | lossy |
-| Han (Simplified) | **error** | lossy | lossy |
-| Japanese | **error** | lossy | lossy |
-| Korean | **error** | lossy | lossy |
-| Greek | **error** | lossy | lossy |
-| Cyrillic | **error** | lossy | lossy |
-| Vietnamese | **error** | partial | partial |
-| Latin (control) | pass | pass | pass |
+| script | pdf-lib | @cantoo/pdf-lib | pdfkit | jspdf |
+|---|---|---|---|---|
+| Arabic | **error** | lossy | lossy | lossy |
+| Arabic (mixed) | **error** | lossy | lossy | lossy |
+| Bidi: Arabic + Latin | **error** | partial | partial | partial |
+| Bidi: Hebrew + Latin | **error** | partial | partial | partial |
+| Hebrew | **error** | lossy | lossy | lossy |
+| Devanagari | **error** | lossy | lossy | lossy |
+| Thai | **error** | lossy | lossy | lossy |
+| Han (Simplified) | **error** | lossy | lossy | lossy |
+| Japanese | **error** | lossy | lossy | lossy |
+| Korean | **error** | lossy | lossy | lossy |
+| Greek | **error** | lossy | lossy | lossy |
+| Cyrillic | **error** | lossy | lossy | lossy |
+| Vietnamese | **error** | partial | partial | partial |
+| Latin (control) | pass | pass | pass | pass |
 
 ### Embedded Unicode font (Arial)
 
-| script | pdf-lib | @cantoo/pdf-lib | pdfkit |
-|---|---|---|---|
-| Arabic | pass | pass | **order** |
-| Arabic (mixed) | order | order | order |
-| Bidi: Arabic + Latin | order | order | order |
-| Bidi: Hebrew + Latin | order | order | **disputed** |
-| Hebrew | pass | pass | **order** |
-| Devanagari | lossy | lossy | lossy |
-| Thai | lossy | lossy | lossy |
-| Han (Simplified) | lossy | lossy | lossy |
-| Japanese | lossy | lossy | lossy |
-| Korean | lossy | lossy | lossy |
-| Greek | pass | pass | pass |
-| Cyrillic | pass | pass | pass |
-| Vietnamese | pass | pass | pass |
-| Latin (control) | pass | pass | pass |
+| script | pdf-lib | @cantoo/pdf-lib | pdfkit | jspdf |
+|---|---|---|---|---|
+| Arabic | pass | pass | order | **disputed** |
+| Arabic (mixed) | order | order | order | **disputed** |
+| Bidi: Arabic + Latin | order | order | order | **disputed** |
+| Bidi: Hebrew + Latin | order | order | **disputed** | order |
+| Hebrew | pass | pass | order | order |
+| Devanagari | lossy | lossy | lossy | FAIL |
+| Thai | lossy | lossy | lossy | FAIL |
+| Han (Simplified) | lossy | lossy | lossy | FAIL |
+| Japanese | lossy | lossy | lossy | FAIL |
+| Korean | lossy | lossy | lossy | FAIL |
+| Greek | pass | pass | pass | pass |
+| Cyrillic | pass | pass | pass | pass |
+| Vietnamese | pass | pass | pass | pass |
+| Latin (control) | pass | pass | pass | pass |
+
+### Glyph placement (a separate axis)
+
+| right-to-left script | pdf-lib | @cantoo/pdf-lib | pdfkit | jspdf |
+|---|---|---|---|---|
+| Arabic | rtl | rtl | rtl | rtl |
+| Bidi: Arabic + Latin | rtl | rtl | rtl | rtl |
+| Hebrew | rtl | rtl | rtl | rtl |
+
+`jsPDF` is the outlier worth noting: with a custom TTF it produces output the two
+referees disagree about for RTL, and for CJK/Devanagari/Thai nothing extractable
+comes back at all (`FAIL`, not `lossy`). It is the newest adapter and the least
+verified of the four.
 
 **The CJK, Devanagari and Thai rows are about the font, not the library.** Arial
 has no coverage for those scripts, so everything is `lossy`. Run `--font` with a
@@ -239,7 +266,8 @@ that is the finding.
 - **Yes/no capabilities are not propagation.** A library that needs a plugin to tag output is scored `no API` — read that as "not out of the box".
 - **One page, one line, default size.** Layout-sensitive behaviour is out of scope.
 - **Not a conformance certifier.** A triage gate, not a PDF/UA verdict.
-- **Three libraries so far.** `pdfmake`, `@pdfme/generator` and `@react-pdf/renderer` are the obvious next adapters.
+- **Four libraries so far:** `pdf-lib`, `@cantoo/pdf-lib`, `pdfkit`, `jspdf`. Others worth adding: `pdfmake`, `@pdfme/generator`, `@react-pdf/renderer`.
+- **Capabilities are attempts, not guarantees.** A `yes` means the documented call produced the marker; a `no API` means the option was accepted and ignored, or the call threw. `inconclusive` means the API exists but this harness could not make it work — a limit of the harness, not the library.
 
 ## Why this exists
 

@@ -3,3 +3,4 @@ results.json
 results.md
 *.log
 tmp-*.mjs
+*.tgz

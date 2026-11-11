@@ -15,7 +15,7 @@
 import { writeFileSync } from 'node:fs';
 import { TEXT_CASES, STRUCTURE_MARKERS, STRUCTURE_LABELS } from './cases/index.js';
 import { extractAll, adjudicate, glyphPlacement, hasRtl, REFEREES } from './extract.js';
-import { ADAPTERS } from './adapters/index.js';
+import { ADAPTERS, observeCapabilities } from './adapters/index.js';
 
 const args = process.argv.slice(2);
 const mdOnly = args.includes('--md');
@@ -100,7 +100,7 @@ async function runAdapter(adapter, ctx) {
   }
 
   try {
-    result.capabilities = await adapter.capabilities();
+    result.capabilities = observeCapabilities(await adapter.attempts());
   } catch (e) {
     result.capabilities = { error: String(e?.message ?? e).slice(0, 120) };
   }
@@ -168,7 +168,13 @@ function mdFiles(results, heading) {
     lines.push(`| ${label} | ${live.map((r) => yesNo(r.structure?.[key])).join(' | ')} |`);
   }
   lines.push(
-    `| AcroForm API | ${live.map((r) => r.capabilities?.forms ?? '—').join(' | ')} |`,
+    `| AcroForm API | ${live.map((r) => r.capabilities?.forms?.api ?? '—').join(' | ')} |`,
+  );
+  lines.push(
+    `| tagging API | ${live.map((r) => r.capabilities?.tagged?.api ?? '—').join(' | ')} |`,
+  );
+  lines.push(
+    `| encryption API | ${live.map((r) => r.capabilities?.encrypt?.api ?? '—').join(' | ')} |`,
   );
   lines.push(
     `| font subsetting | ${live.map((r) => r.subsetting ?? (r.structure ? 'n/a (default font)' : '—')).join(' | ')} |`,
@@ -222,6 +228,13 @@ if (!mdOnly) {
       console.log(
         `    ${r.name.padEnd(18)} v${String(r.version).padEnd(9)} ${pass}/${vals.length} exact${err ? `, ${err} threw` : ''}`,
       );
+      // Capabilities are measured by symbol scan; show the evidence so a reader
+      // can tell a probe from an assertion.
+      const cap = r.capabilities ?? {};
+      const bits = Object.entries(cap)
+        .map(([k, v]) => `${k}=${v?.api}${v?.api === 'yes' ? ` (${v.evidence})` : ''}`)
+        .join('; ');
+      if (bits) console.log(`      ${bits}`);
     }
   }
   console.log('');

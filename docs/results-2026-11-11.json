@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-11T10:16:32.243Z",
+  "generatedAt": "2026-11-11T10:33:28.013Z",
   "node": "v24.21.0",
   "referees": [
     "pdfjs",
@@ -97,9 +97,18 @@
             "encrypted": false
           },
           "capabilities": {
-            "forms": "yes",
-            "encrypt": "no API",
-            "tagged": "no API"
+            "forms": {
+              "api": "yes",
+              "evidence": "\\/AcroForm present in output"
+            },
+            "encrypt": {
+              "api": "no API",
+              "evidence": "option accepted, \\/Encrypt absent"
+            },
+            "tagged": {
+              "api": "no API",
+              "evidence": "option accepted, \\/StructTreeRoot absent"
+            }
           },
           "bytes": 1269
         },
@@ -391,9 +400,18 @@
             "encrypted": false
           },
           "capabilities": {
-            "forms": "yes",
-            "encrypt": "no API",
-            "tagged": "no API"
+            "forms": {
+              "api": "yes",
+              "evidence": "\\/AcroForm present in output"
+            },
+            "encrypt": {
+              "api": "no API",
+              "evidence": "option accepted, \\/Encrypt absent"
+            },
+            "tagged": {
+              "api": "no API",
+              "evidence": "option accepted, \\/StructTreeRoot absent"
+            }
           },
           "bytes": 1269
         },
@@ -685,11 +703,325 @@
             "encrypted": false
           },
           "capabilities": {
-            "forms": "no API",
-            "encrypt": "no API",
-            "tagged": "no API"
+            "forms": {
+              "api": "yes",
+              "evidence": "\\/AcroForm present in output"
+            },
+            "encrypt": {
+              "api": "yes",
+              "evidence": "\\/Encrypt present in output"
+            },
+            "tagged": {
+              "api": "yes",
+              "evidence": "\\/StructTreeRoot present in output"
+            }
           },
-          "bytes": 1220
+          "bytes": 1213,
+          "fontkit": "n/a (pdfkit embeds directly)"
+        },
+        {
+          "id": "jspdf",
+          "name": "jspdf",
+          "version": "4.2.1",
+          "installed": true,
+          "cases": {
+            "ar-basic": {
+              "status": "LOSSY",
+              "kept": 0,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "þâþßþŽþÌþßþŽþ‘ þŽþ’þ£þ®þã"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "þâþßþŽþÌþßþŽþ‘� þŽþ’þ£þ®þã\n\n"
+                }
+              ],
+              "agreed": true,
+              "placement": "none"
+            },
+            "ar-invoice": {
+              "status": "LOSSY",
+              "kept": 0.29,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "LOSSY",
+                  "kept": 0.2857142857142857,
+                  "readBack": "2 0 2 6 þ”þèþ´þß 4 2 þâþ×þ- þ“þ-þîþ—þŽþÔ"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "LOSSY",
+                  "kept": 0.2857142857142857,
+                  "readBack": "�2�0�2�6� þ”þèþ´þß� �4�2� þâþ×þ-� þ“þ-þî"
+                }
+              ],
+              "agreed": true,
+              "placement": "none"
+            },
+            "bidi-ar-latin": {
+              "status": "PARTIAL",
+              "kept": 0.73,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "PARTIAL",
+                  "kept": 0.7307692307692307,
+                  "readBack": "I n v o i c e 4 2 : 0 3 / 2 0 2 6 ( þÚþ‘"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "PARTIAL",
+                  "kept": 0.7307692307692307,
+                  "readBack": "�I�n�v�o�i�c�e� �4�2�:� �0�3�/�2�0�2�6�("
+                }
+              ],
+              "agreed": true,
+              "placement": "none"
+            },
+            "bidi-he-latin": {
+              "status": "PARTIAL",
+              "kept": 0.67,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "PARTIAL",
+                  "kept": 0.6666666666666666,
+                  "readBack": "é Ü Õ Ý 3 2 1 d l r o W"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "PARTIAL",
+                  "kept": 0.6666666666666666,
+                  "readBack": "�é�Ü�Õ�Ý� �3�2�1� �d�l�r�o�W\n\n"
+                }
+              ],
+              "agreed": true,
+              "placement": "none"
+            },
+            "he": {
+              "status": "LOSSY",
+              "kept": 0,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "é Ü Õ Ý â Õ Ü Ý"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "�é�Ü�Õ�Ý� �â�Õ�Ü�Ý\n\n"
+                }
+              ],
+              "agreed": true,
+              "placement": "none"
+            },
+            "hi-deva": {
+              "status": "LOSSY",
+              "kept": 0,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "( . 8 M $ G & A ( ? / >"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "�(�.�8�M�$�G� �&�A�(�?�/�>\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "th": {
+              "status": "LOSSY",
+              "kept": 0,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "* ' 1 * 5 2 ' B %"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "�*�'�1�*���5���2�'�B�%��\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "zh-hans": {
+              "status": "LOSSY",
+              "kept": 0,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "O`Y}N uL"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "O`Y}N�uL\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "ja": {
+              "status": "LOSSY",
+              "kept": 0,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "0S0“0k0a0oN uL"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "0S0“0k0a0oN�uL\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "ko": {
+              "status": "LOSSY",
+              "kept": 0,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "ÅH±UÕXÁ8Æ” Á8¬Ä"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "ÅH±UÕXÁ8Æ”� Á8¬Ä\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "el": {
+              "status": "LOSSY",
+              "kept": 0,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "LOSSY",
+                  "kept": 0.08333333333333333,
+                  "readBack": "“ μ ¹ ¬ Ã ¿ Å š Ì Ã ¼ μ"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "�“�µ�¹�¬� �Ã�¿�Å� �š�Ì�Ã�¼�µ\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "ru-cyr": {
+              "status": "LOSSY",
+              "kept": 0.1,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "LOSSY",
+                  "kept": 0.1,
+                  "readBack": "@ 8 2 5 B , < 8 @"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "LOSSY",
+                  "kept": 0.1,
+                  "readBack": "���@�8�2�5�B�,� �<�8�@\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "vi": {
+              "status": "PARTIAL",
+              "kept": 0.79,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "PARTIAL",
+                  "kept": 0.7857142857142857,
+                  "readBack": "T i ¿ n g V i Ç t c ó d ¥ u"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "PARTIAL",
+                  "kept": 0.7857142857142857,
+                  "readBack": "�T�i�¿�n�g� �V�i�Ç�t� �c�ó� �d�¥�u\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "ascii-control": {
+              "status": "PASS",
+              "kept": 1,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "PASS",
+                  "kept": 1,
+                  "readBack": "Invoice 42 - paid"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "PASS",
+                  "kept": 1,
+                  "readBack": "Invoice 42 - paid\n\n"
+                }
+              ],
+              "agreed": true
+            }
+          },
+          "structure": {
+            "tagged": false,
+            "marked": false,
+            "lang": false,
+            "title": false,
+            "altText": false,
+            "embeddedFont": false,
+            "encrypted": false
+          },
+          "capabilities": {
+            "forms": {
+              "api": "inconclusive",
+              "evidence": "AcroFormTextField exists, but \\/AcroForm absent"
+            },
+            "encrypt": {
+              "api": "yes",
+              "evidence": "\\/Encrypt present in output"
+            },
+            "tagged": {
+              "api": "no API",
+              "evidence": "option accepted, \\/StructTreeRoot absent"
+            }
+          },
+          "bytes": 3157,
+          "fontkit": "n/a (jsPDF embeds directly)"
         }
       ]
     },
@@ -984,9 +1316,18 @@
             "encrypted": false
           },
           "capabilities": {
-            "forms": "yes",
-            "encrypt": "no API",
-            "tagged": "no API"
+            "forms": {
+              "api": "yes",
+              "evidence": "\\/AcroForm present in output"
+            },
+            "encrypt": {
+              "api": "no API",
+              "evidence": "option accepted, \\/Encrypt absent"
+            },
+            "tagged": {
+              "api": "no API",
+              "evidence": "option accepted, \\/StructTreeRoot absent"
+            }
           },
           "bytes": 9603,
           "subsetting": "ok",
@@ -1280,9 +1621,18 @@
             "encrypted": false
           },
           "capabilities": {
-            "forms": "yes",
-            "encrypt": "no API",
-            "tagged": "no API"
+            "forms": {
+              "api": "yes",
+              "evidence": "\\/AcroForm present in output"
+            },
+            "encrypt": {
+              "api": "no API",
+              "evidence": "option accepted, \\/Encrypt absent"
+            },
+            "tagged": {
+              "api": "no API",
+              "evidence": "option accepted, \\/StructTreeRoot absent"
+            }
           },
           "bytes": 9645,
           "subsetting": "ok",
@@ -1576,11 +1926,325 @@
             "encrypted": false
           },
           "capabilities": {
-            "forms": "no API",
-            "encrypt": "no API",
-            "tagged": "no API"
+            "forms": {
+              "api": "yes",
+              "evidence": "\\/AcroForm present in output"
+            },
+            "encrypt": {
+              "api": "yes",
+              "evidence": "\\/Encrypt present in output"
+            },
+            "tagged": {
+              "api": "yes",
+              "evidence": "\\/StructTreeRoot present in output"
+            }
           },
-          "bytes": 9804
+          "bytes": 13325,
+          "fontkit": "n/a (pdfkit embeds directly)"
+        },
+        {
+          "id": "jspdf",
+          "name": "jspdf",
+          "version": "4.2.1",
+          "installed": true,
+          "cases": {
+            "ar-basic": {
+              "status": "DISPUTED",
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "ﻣﺮﺣﺒﺎ ﺑﺎﻟﻌﺎﻟﻢ"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "PASS",
+                  "kept": 1,
+                  "readBack": "مرحبا بالعالم\n\n"
+                }
+              ],
+              "agreed": false,
+              "detail": "LOSSY vs PASS",
+              "placement": "rtl"
+            },
+            "ar-invoice": {
+              "status": "DISPUTED",
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "LOSSY",
+                  "kept": 0.2857142857142857,
+                  "readBack": "ﺍﻟﻔﺎﺗﻮﺭﺓ ﺭﻗﻢ 42 ﻟﺴﻨﺔ 2026"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "ORDER",
+                  "kept": 1,
+                  "readBack": "2026  لسنة42 الفاتورة رقم\n\n"
+                }
+              ],
+              "agreed": false,
+              "detail": "LOSSY vs ORDER",
+              "placement": "rtl"
+            },
+            "bidi-ar-latin": {
+              "status": "DISPUTED",
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "PARTIAL",
+                  "kept": 0.7307692307692307,
+                  "readBack": "Invoice 42: 03/2026( ﻣﺮﺣﺒﺎ ﺑﻚ)"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "ORDER",
+                  "kept": 1,
+                  "readBack": "Invoice 42: 03/2026( )مرحبا بك\n\n"
+                }
+              ],
+              "agreed": false,
+              "detail": "PARTIAL vs ORDER",
+              "placement": "rtl"
+            },
+            "bidi-he-latin": {
+              "status": "ORDER",
+              "kept": 1,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "ORDER",
+                  "kept": 1,
+                  "readBack": "321 םולש dlroW"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "ORDER",
+                  "kept": 1,
+                  "readBack": " םולש321 dlroW\n\n"
+                }
+              ],
+              "agreed": true,
+              "placement": "rtl"
+            },
+            "he": {
+              "status": "ORDER",
+              "kept": 1,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "ORDER",
+                  "kept": 1,
+                  "readBack": "םלוע םולש"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "ORDER",
+                  "kept": 1,
+                  "readBack": "םלוע םולש\n\n"
+                }
+              ],
+              "agreed": true,
+              "placement": "rtl"
+            },
+            "hi-deva": {
+              "status": "FAIL",
+              "kept": 0,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "FAIL",
+                  "kept": 0,
+                  "readBack": ""
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "FAIL",
+                  "kept": 0,
+                  "readBack": " \n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "th": {
+              "status": "FAIL",
+              "kept": 0,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "FAIL",
+                  "kept": 0,
+                  "readBack": ""
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "FAIL",
+                  "kept": 0,
+                  "readBack": ""
+                }
+              ],
+              "agreed": true
+            },
+            "zh-hans": {
+              "status": "FAIL",
+              "kept": 0,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "FAIL",
+                  "kept": 0,
+                  "readBack": ""
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "FAIL",
+                  "kept": 0,
+                  "readBack": ""
+                }
+              ],
+              "agreed": true
+            },
+            "ja": {
+              "status": "FAIL",
+              "kept": 0,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "FAIL",
+                  "kept": 0,
+                  "readBack": ""
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "FAIL",
+                  "kept": 0,
+                  "readBack": ""
+                }
+              ],
+              "agreed": true
+            },
+            "ko": {
+              "status": "FAIL",
+              "kept": 0,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "FAIL",
+                  "kept": 0,
+                  "readBack": ""
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "FAIL",
+                  "kept": 0,
+                  "readBack": " \n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "el": {
+              "status": "PASS",
+              "kept": 1,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "PASS",
+                  "kept": 1,
+                  "readBack": "Γειά σου Κόσμε"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "PASS",
+                  "kept": 1,
+                  "readBack": "Γειά σου Κόσμε\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "ru-cyr": {
+              "status": "PASS",
+              "kept": 1,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "PASS",
+                  "kept": 1,
+                  "readBack": "Привет, мир"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "PASS",
+                  "kept": 1,
+                  "readBack": "Привет, мир\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "vi": {
+              "status": "PASS",
+              "kept": 1,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "PASS",
+                  "kept": 1,
+                  "readBack": "Tiếng Việt có dấu"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "PASS",
+                  "kept": 1,
+                  "readBack": "Tiếng Việt có dấu\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "ascii-control": {
+              "status": "PASS",
+              "kept": 1,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "PASS",
+                  "kept": 1,
+                  "readBack": "Invoice 42 - paid"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "PASS",
+                  "kept": 1,
+                  "readBack": "Invoice 42 - paid\n\n"
+                }
+              ],
+              "agreed": true
+            }
+          },
+          "structure": {
+            "tagged": false,
+            "marked": false,
+            "lang": false,
+            "title": false,
+            "altText": false,
+            "embeddedFont": true,
+            "encrypted": false
+          },
+          "capabilities": {
+            "forms": {
+              "api": "inconclusive",
+              "evidence": "AcroFormTextField exists, but \\/AcroForm absent"
+            },
+            "encrypt": {
+              "api": "yes",
+              "evidence": "\\/Encrypt present in output"
+            },
+            "tagged": {
+              "api": "no API",
+              "evidence": "option accepted, \\/StructTreeRoot absent"
+            }
+          },
+          "bytes": 77146,
+          "fontkit": "n/a (jsPDF embeds directly)"
         }
       ]
     }
