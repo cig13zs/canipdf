@@ -84,8 +84,15 @@ structure-tree writing. Typst and WeasyPrint are already shipping tagged output
 
 ## Method note
 
-Any of these could be a referee artifact. The extractor is `pdfjs-dist`, a
-different project from all three subjects, which is the point — but a bug in the
-referee would read as a subject failure. Before filing publicly, cross-check the
-reordered-RTL and silent-loss cases with a second extractor (MuPDF or `qpdf`).
-The font-subsetting crash needs no referee: it throws before any PDF exists.
+Each PDF is read back by **two independent engines**: `pdfjs-dist` 4.10.38 and
+MuPDF 1.28.6. On the 2026-11-11 run they agreed on **61 of 61 measurable cells,
+with zero disagreements** — so F1 and F3 are not artifacts of a single extractor.
+`canipdf` reports any cell the two disagree on as `disputed` instead of resolving
+it silently.
+
+The font-subsetting crash (F2) needs no referee at all: it throws before a PDF
+exists. F4 is read from the raw bytes with a regex, not from either engine.
+
+Remaining step before filing publicly: confirm the RTL ordering on a document
+with mixed directional runs, not just a single line. A single-line control is the
+weakest form of F1.

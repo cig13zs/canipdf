@@ -14,7 +14,12 @@ npx canipdf --font ./NotoSans.ttf
 ## What it found on the first run
 
 Measured 2026-11-11, Node v24.21.0, `pdf-lib` 1.17.1, `@cantoo/pdf-lib` 2.11.1,
-`pdfkit` 0.15.2, refereed by `pdfjs-dist` 4.10.38.
+`pdfkit` 0.15.2, refereed independently by `pdfjs-dist` 4.10.38 **and MuPDF 1.28.6**.
+
+**Both referees agreed on all 61 measurable cells — zero disputes.** That matters:
+the findings below are not an artifact of one extractor's quirks. Any cell where
+the two engines disagreed would be reported as `disputed` instead of being
+averaged into a verdict.
 
 ### 1. Two of the three libraries corrupt non-Latin text *silently*
 
@@ -141,7 +146,9 @@ One adapter, about 30 lines. It may only use the library's public API — no pos
 ## Scope and limitations
 
 - **Text round-trip only, so far.** Real rendering has more failure modes than codepoints: shaping, kerning, bidi runs, line breaking. This measures the part that is objective.
-- **The referee is `pdfjs-dist`.** A bug in the referee would show up as a library failure. Cross-checking with a second extractor is the obvious next step.
+- **The referees are `pdfjs-dist` and MuPDF.** Two independent engines, checked
+  against each other; a disagreement is reported as `disputed` rather than
+  resolved silently. On the run above they agreed on 61/61 cells.
 - **One page, one line, default size.** Layout-sensitive behaviour is out of scope for v0.
 - **Font coverage and library capability are different things.** Always run both passes before drawing a conclusion.
 - **Not a conformance certifier.** This is a triage gate, not a PDF/UA verdict.

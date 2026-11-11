@@ -14,6 +14,9 @@ importers:
       '@pdf-lib/fontkit':
         specifier: ^1.1.1
         version: 1.1.1
+      mupdf:
+        specifier: ^1.28.6
+        version: 1.28.6
       pdf-lib:
         specifier: ^1.17.1
         version: 1.17.1
@@ -324,6 +327,9 @@ packages:
   math-intrinsics@1.1.0:
     resolution: {integrity: sha512-/IXtbwEk5HTPyEwyKX6hGkYXxM9nbj64B+ilVJnC/R6B0pH5G4V3b0pVbL7DBj4tkhBAppbQUlf6F6Xl9LHu1g==}
     engines: {node: '>= 0.4'}
+
+  mupdf@1.28.6:
+    resolution: {integrity: sha512-LsNqk3a9TNJGjJKWVOUK1YMlWJNxFh8bIf+SSxGI+A+WXDlkwc4R2PW/n1qINb4YpqZfOazjPdRqw95WpmCrfw==}
 
   node-html-better-parser@1.5.9:
     resolution: {integrity: sha512-z1I5UINMezJXYL9cH3h0a9KBth2G978gSLlfkpQ+CQzzVHVQy9gpARgm9eDsz1O4gn1HtgUqjdAIYxKFZm6uHQ==}
@@ -753,6 +759,8 @@ snapshots:
       unicode-trie: 2.0.0
 
   math-intrinsics@1.1.0: {}
+
+  mupdf@1.28.6: {}
 
   node-html-better-parser@1.5.9:
     dependencies:

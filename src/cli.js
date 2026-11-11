@@ -14,7 +14,7 @@
 
 import { writeFileSync } from 'node:fs';
 import { TEXT_CASES, STRUCTURE_MARKERS, STRUCTURE_LABELS } from './cases/index.js';
-import { extractText, compare } from './extract.js';
+import { extractAll, adjudicate, REFEREES } from './extract.js';
 import { ADAPTERS } from './adapters/index.js';
 
 const args = process.argv.slice(2);
@@ -31,6 +31,7 @@ const SYMBOL = {
   FAIL: 'FAIL',
   ERR: '**error**',
   SKIP: 'n/a',
+  DISPUTED: '**disputed**',
 };
 
 function structureOf(bytes) {
@@ -78,17 +79,7 @@ async function runAdapter(adapter, ctx) {
     try {
       const out = await adapter.generate(c.text, ctx);
       const bytes = out?.bytes ?? out;
-      const read = await extractText(bytes);
-      if (!read.ok) {
-        result.cases[c.id] = { status: 'SKIP', detail: read.reason };
-        continue;
-      }
-      const cmp = compare(c.text, read.text);
-      result.cases[c.id] = {
-        status: cmp.status,
-        kept: Number(cmp.kept.toFixed(2)),
-        readBack: read.text.slice(0, 40),
-      };
+      result.cases[c.id] = adjudicate(c.text, await extractAll(bytes));
     } catch (e) {
       result.cases[c.id] = { status: 'ERR', detail: String(e?.message ?? e).slice(0, 110) };
     }
@@ -133,7 +124,12 @@ function mdFiles(results, heading) {
 const passes = [{ label: 'Default font', ctx: {} }];
 if (fontPath) passes.push({ label: `Embedded font (${fontPath.split(/[\\/]/).pop()})`, ctx: { fontPath } });
 
-const payload = { generatedAt: new Date().toISOString(), node: process.version, passes: [] };
+const payload = {
+  generatedAt: new Date().toISOString(),
+  node: process.version,
+  referees: REFEREES.map((r) => r.id),
+  passes: [],
+};
 
 for (const pass of passes) {
   const results = [];
