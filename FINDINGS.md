@@ -48,9 +48,21 @@ matrix (`fontkit used` row). A dependency mismatch can no longer masquerade as a
 library defect. The declared fontkit version is part of the result, not an
 assumption.
 
-**What survives as a real, modest finding.** Migrating `pdf-lib` → `@cantoo/pdf-lib`
-and carrying over the `@pdf-lib/fontkit` import produces a crash with no
-diagnostic. That is a *documentation gap* worth a docs PR, not a bug report.
+**What survives as a real, modest finding.** Not a bug and not a docs gap I can
+fix: the fork's README *already* documents `@cantoo/fontkit` (a fontkit 2.x fork
+with a default export) and states that upstream packages remain supported "for
+compatibility". So the trap is a two-hours-later surprise, not missing
+documentation — and a docs PR would have been redundant, and less precise than what
+is already there. A second near-miss avoided by reading the target first.
+
+**What changed in the harness.** It now asks each library for the fontkit its own
+README documents, falls back through the others, and records the resolved package
+in the `fontkit used` row:
+
+| library | documented fontkit | resolved | result |
+|---|---|---|---|
+| `pdf-lib` | `@pdf-lib/fontkit` | `@pdf-lib/fontkit@1.1.1` | subsets, 9.4 KB |
+| `@cantoo/pdf-lib` | `@cantoo/fontkit` | `@cantoo/fontkit@2.0.12` | subsets, 9.4 KB |
 
 ---
 

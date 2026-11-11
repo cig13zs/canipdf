@@ -83,11 +83,16 @@ Paired correctly, the fork subsets fine at 9.4 KB. It was caught by a duplicate
 check before filing: `cantoo-scribe/pdf-lib#144` and `#151` already document both
 the fontkit version requirement and the 2.x default-export change.
 
-The harness now tries every installed fontkit per library and **records which one
-each library needed** in the `fontkit used` row, so a dependency mismatch can no
-longer be misreported as a library defect. What survives is a modest documentation
-gap: carrying a `@pdf-lib/fontkit` import from `pdf-lib` to the fork crashes with
-no diagnostic.
+The harness now asks each library for the fontkit **its own README documents**
+(`pdf-lib` → `@pdf-lib/fontkit`, `@cantoo/pdf-lib` → `@cantoo/fontkit`, a fontkit
+2.x fork), falls back through the others, and **records which one each library
+actually needed** in the `fontkit used` row — so a dependency mismatch can no
+longer be misreported as a library defect. Paired correctly, both produce 9.4 KB.
+
+What survives is a modest migration note, not a bug: the fork's README documents
+`@cantoo/fontkit` and keeps upstream packages "for compatibility", so carrying a
+`@pdf-lib/fontkit` import across works — until a path that needs newer fontkit
+behaviour is hit, where it fails without a useful diagnostic.
 
 ### Measured, not assumed: RTL looks right, but `pdfkit` documents *extract* wrong
 

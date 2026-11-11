@@ -32,22 +32,32 @@ function pkgVersion(pkg) {
 }
 
 /**
- * Fontkit candidates, in the order we try them.
+ * Fontkit candidates.
  *
- * `@pdf-lib/fontkit` is 1.x and is what most pdf-lib projects have today;
- * `fontkit` is 2.x and is what the maintained fork was fixed against. Pairing
- * the wrong one is a documented trap (cantoo-scribe/pdf-lib#144, #151), so the
- * harness tries both and records which one each library actually needed —
- * otherwise a dependency mismatch gets reported as a library bug.
+ * There are three live fontkit packages and each library documents a different
+ * preferred one: `pdf-lib` documents `@pdf-lib/fontkit` (1.x), while
+ * `@cantoo/pdf-lib`'s README documents its own `@cantoo/fontkit` (a fontkit 2.x
+ * fork with a default export) and keeps upstream `fontkit` working. Pairing the
+ * wrong one is a documented trap, so the harness asks each library for its own
+ * preference order and records which package it actually needed — otherwise a
+ * dependency mismatch gets reported as a library defect.
  */
-const FONTKITS = [
-  { id: 'fontkit', resolve: async () => { const m = await import('fontkit'); return m.default ?? m; } },
-  { id: '@pdf-lib/fontkit', resolve: async () => (await import('@pdf-lib/fontkit')).default },
-];
+const FONTKITS = {
+  'fontkit': async () => { const m = await import('fontkit'); return m.default ?? m; },
+  '@cantoo/fontkit': async () => { const m = await import('@cantoo/fontkit'); return m.default ?? m; },
+  '@pdf-lib/fontkit': async () => (await import('@pdf-lib/fontkit')).default,
+};
+
+/** Each library's documented preference, then the others as fallbacks. */
+const FONTKIT_ORDER = {
+  'pdf-lib': ['@pdf-lib/fontkit', 'fontkit', '@cantoo/fontkit'],
+  '@cantoo/pdf-lib': ['@cantoo/fontkit', 'fontkit', '@pdf-lib/fontkit'],
+};
 
 function fontkitVersion(id) {
   try {
-    return JSON.parse(require('node:fs').readFileSync(require('node:path').join(process.cwd(), 'node_modules', id, 'package.json'), 'utf8')).version;
+    const p = require('node:path').join(process.cwd(), 'node_modules', id, 'package.json');
+    return JSON.parse(require('node:fs').readFileSync(p, 'utf8')).version;
   } catch {
     return '?';
   }
@@ -74,29 +84,26 @@ const pdfLibFamily = (pkg) => ({
     }
 
     const fontBytes = await readFile(ctx.fontPath);
+    const order = FONTKIT_ORDER[pkg] ?? Object.keys(FONTKITS);
 
     // Try each fontkit with subsetting; first one that works wins.
-    for (const candidate of FONTKITS) {
+    for (const id of order) {
       try {
-        const kit = await candidate.resolve();
+        const kit = await FONTKITS[id]();
         const bytes = await build(async (doc) => {
           doc.registerFontkit(kit);
           return doc.embedFont(fontBytes, { subset: true });
         });
-        return {
-          bytes,
-          notes,
-          fontkit: `${candidate.id}@${fontkitVersion(candidate.id)}`,
-          subsetting: 'ok',
-        };
+        return { bytes, notes, fontkit: `${id}@${fontkitVersion(id)}`, subsetting: 'ok' };
       } catch (e) {
-        notes.push(`${candidate.id}: ${String(e?.message ?? e).slice(0, 70)}`);
+        notes.push(`${id}: ${String(e?.message ?? e).slice(0, 70)}`);
       }
     }
 
     // Nothing could subset. Fall back to a full embed so the text column is
     // still measurable, and say so loudly — the file size will show it.
-    const kit = await FONTKITS[0].resolve();
+    const fallbackId = order[0];
+    const kit = await FONTKITS[fallbackId]();
     const bytes = await build(async (doc) => {
       doc.registerFontkit(kit);
       return doc.embedFont(fontBytes, { subset: false });
@@ -104,7 +111,7 @@ const pdfLibFamily = (pkg) => ({
     return {
       bytes,
       notes,
-      fontkit: `${FONTKITS[0].id}@${fontkitVersion(FONTKITS[0].id)}`,
+      fontkit: `${fallbackId}@${fontkitVersion(fallbackId)}`,
       subsetting: 'failed — fell back to full embed',
     };
   },
