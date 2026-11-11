@@ -2,7 +2,7 @@
 
 **Conformance tests for JavaScript PDF libraries.** Does the library actually work, or does it just have a good README?
 
-Every library claims to support Unicode, forms and accessibility. Almost none are tested against each other. `canipdf` renders the same fixtures through each library, reads the output back with **two independent extractors**, and compares codepoints. Pixels are not evidence. Codepoints are.
+Every library claims to support Unicode, forms and accessibility. Almost none are tested against each other. `canipdf` renders the same fixtures through each library, reads the output back with **two independent extractors**, and reports two separate axes: whether the text survives a round trip, and where the glyphs were physically placed. Pixels are not evidence. Codepoints and coordinates are.
 
 ```
 npx canipdf                                  # human summary + matrix
