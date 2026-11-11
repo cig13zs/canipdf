@@ -22,6 +22,35 @@ const mdOnly = args.includes('--md');
 const jsonOnly = args.includes('--json');
 const fontIdx = args.indexOf('--font');
 const fontPath = fontIdx >= 0 ? args[fontIdx + 1] : null;
+const failIdx = args.indexOf('--fail-on');
+const failOn = failIdx >= 0 ? (args[failIdx + 1] ?? '').split(',').filter(Boolean) : [];
+
+if (args.includes('--help') || args.includes('-h')) {
+  console.log(`canipdf — conformance tests for JavaScript PDF libraries
+
+Usage
+  canipdf                        human summary + markdown matrix
+  canipdf --md                   markdown only
+  canipdf --json                 machine-readable results
+  canipdf --font ./font.ttf      also run a pass with a real Unicode font
+  canipdf --fail-on ERR,LOSSY    exit 1 if any case has one of these statuses
+
+Statuses
+  pass      every codepoint survived, in order
+  order     all codepoints survived, reordered (RTL/bidi)
+  partial   >=50% survived
+  lossy     <50% survived
+  FAIL      nothing recognisable came back
+  error     the library threw
+  disputed  the two referees disagreed
+  n/a       not applicable
+
+Exit codes
+  0  no --fail-on match
+  1  --fail-on matched
+  2  no referee available (results would be meaningless)`);
+  process.exit(0);
+}
 
 const SYMBOL = {
   PASS: 'pass',
@@ -179,3 +208,41 @@ if (!mdOnly) {
   }
   console.log('\nresults written to results.json');
 }
+
+// ---- exit status -------------------------------------------------------
+// 0 clean · 1 --fail-on matched · 2 nothing was measurable (fail loudly
+// rather than reporting a green bar over an empty matrix).
+let exitCode = 0;
+
+const allCases = payload.passes.flatMap((p) =>
+  p.results.flatMap((r) => Object.values(r.cases ?? {})),
+);
+if (allCases.length && allCases.every((c) => c.status === 'SKIP' || c.status === 'ERR')) {
+  if (!mdOnly) console.error('\nno referee produced a readable result — refusing to report success');
+  exitCode = 2;
+}
+
+if (failOn.length) {
+  const hits = [];
+  for (const p of payload.passes) {
+    for (const r of p.results) {
+      for (const [k, v] of Object.entries(r.cases ?? {})) {
+        if (failOn.includes(v.status)) hits.push({ pass: p.label, lib: r.name, case: k, status: v.status });
+      }
+    }
+  }
+  if (hits.length) {
+    exitCode = 1;
+    if (!mdOnly) {
+      console.error(`\n--fail-on ${failOn.join(',')}: ${hits.length} case(s) matched`);
+      for (const h of hits.slice(0, 15)) {
+        console.error(`  ${h.status.padEnd(9)} ${h.lib.padEnd(18)} ${h.case}  [${h.pass}]`);
+      }
+      if (hits.length > 15) console.error(`  ... and ${hits.length - 15} more`);
+    }
+  } else if (!mdOnly) {
+    console.log(`\n--fail-on ${failOn.join(',')}: clean`);
+  }
+}
+
+process.exit(exitCode);

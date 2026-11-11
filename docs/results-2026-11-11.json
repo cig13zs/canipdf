@@ -1,0 +1,1564 @@
+{
+  "generatedAt": "2026-11-11T09:33:24.766Z",
+  "node": "v24.21.0",
+  "referees": [
+    "pdfjs",
+    "mupdf"
+  ],
+  "passes": [
+    {
+      "label": "Default font",
+      "results": [
+        {
+          "id": "pdf-lib",
+          "name": "pdf-lib",
+          "version": "1.17.1",
+          "installed": true,
+          "cases": {
+            "ar-basic": {
+              "status": "ERR",
+              "detail": "WinAnsi cannot encode \"م\" (0x0645)"
+            },
+            "ar-invoice": {
+              "status": "ERR",
+              "detail": "WinAnsi cannot encode \"ا\" (0x0627)"
+            },
+            "bidi-ar-latin": {
+              "status": "ERR",
+              "detail": "WinAnsi cannot encode \"م\" (0x0645)"
+            },
+            "bidi-he-latin": {
+              "status": "ERR",
+              "detail": "WinAnsi cannot encode \"ש\" (0x05e9)"
+            },
+            "he": {
+              "status": "ERR",
+              "detail": "WinAnsi cannot encode \"ש\" (0x05e9)"
+            },
+            "hi-deva": {
+              "status": "ERR",
+              "detail": "WinAnsi cannot encode \"न\" (0x0928)"
+            },
+            "th": {
+              "status": "ERR",
+              "detail": "WinAnsi cannot encode \"ส\" (0x0e2a)"
+            },
+            "zh-hans": {
+              "status": "ERR",
+              "detail": "WinAnsi cannot encode \"你\" (0x4f60)"
+            },
+            "ja": {
+              "status": "ERR",
+              "detail": "WinAnsi cannot encode \"こ\" (0x3053)"
+            },
+            "ko": {
+              "status": "ERR",
+              "detail": "WinAnsi cannot encode \"안\" (0xc548)"
+            },
+            "el": {
+              "status": "ERR",
+              "detail": "WinAnsi cannot encode \"Γ\" (0x0393)"
+            },
+            "ru-cyr": {
+              "status": "ERR",
+              "detail": "WinAnsi cannot encode \"П\" (0x041f)"
+            },
+            "vi": {
+              "status": "ERR",
+              "detail": "WinAnsi cannot encode \"ế\" (0x1ebf)"
+            },
+            "ascii-control": {
+              "status": "PASS",
+              "kept": 1,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "PASS",
+                  "kept": 1,
+                  "readBack": "Invoice 42 - paid"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "PASS",
+                  "kept": 1,
+                  "readBack": "Invoice 42 - paid\n\n"
+                }
+              ],
+              "agreed": true
+            }
+          },
+          "structure": {
+            "tagged": false,
+            "marked": false,
+            "lang": false,
+            "title": false,
+            "altText": false,
+            "embeddedFont": false,
+            "encrypted": false
+          },
+          "capabilities": {
+            "forms": "yes",
+            "encrypt": "no API",
+            "tagged": "no API"
+          },
+          "bytes": 1269
+        },
+        {
+          "id": "cantoo",
+          "name": "@cantoo/pdf-lib",
+          "version": "2.11.1",
+          "installed": true,
+          "cases": {
+            "ar-basic": {
+              "status": "LOSSY",
+              "kept": 0,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "????? ???????"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "????? ???????\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "ar-invoice": {
+              "status": "LOSSY",
+              "kept": 0.29,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "LOSSY",
+                  "kept": 0.2857142857142857,
+                  "readBack": "???????? ??? 42 ???? 2026"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "LOSSY",
+                  "kept": 0.2857142857142857,
+                  "readBack": "???????? ??? 42 ???? 2026\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "bidi-ar-latin": {
+              "status": "PARTIAL",
+              "kept": 0.73,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "PARTIAL",
+                  "kept": 0.7307692307692307,
+                  "readBack": "Invoice 42: ????? ?? (03/2026)"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "PARTIAL",
+                  "kept": 0.7307692307692307,
+                  "readBack": "Invoice 42: ????? ?? (03/2026)\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "bidi-he-latin": {
+              "status": "PARTIAL",
+              "kept": 0.67,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "PARTIAL",
+                  "kept": 0.6666666666666666,
+                  "readBack": "???? World 123"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "PARTIAL",
+                  "kept": 0.6666666666666666,
+                  "readBack": "???? World 123\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "he": {
+              "status": "LOSSY",
+              "kept": 0,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "???? ????"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "???? ????\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "hi-deva": {
+              "status": "LOSSY",
+              "kept": 0,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "?????? ??????"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "?????? ??????\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "th": {
+              "status": "LOSSY",
+              "kept": 0,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "????????????"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "????????????\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "zh-hans": {
+              "status": "LOSSY",
+              "kept": 0,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "????"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "????\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "ja": {
+              "status": "LOSSY",
+              "kept": 0,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "???????"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "???????\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "ko": {
+              "status": "LOSSY",
+              "kept": 0,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "????? ??"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "????? ??\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "el": {
+              "status": "LOSSY",
+              "kept": 0,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "???? ??? ?????"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "???? ??? ?????\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "ru-cyr": {
+              "status": "LOSSY",
+              "kept": 0.1,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "LOSSY",
+                  "kept": 0.1,
+                  "readBack": "??????, ???"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "LOSSY",
+                  "kept": 0.1,
+                  "readBack": "??????, ???\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "vi": {
+              "status": "PARTIAL",
+              "kept": 0.79,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "PARTIAL",
+                  "kept": 0.7857142857142857,
+                  "readBack": "Ti?ng Vi?t có d?u"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "PARTIAL",
+                  "kept": 0.7857142857142857,
+                  "readBack": "Ti?ng Vi?t có d?u\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "ascii-control": {
+              "status": "PASS",
+              "kept": 1,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "PASS",
+                  "kept": 1,
+                  "readBack": "Invoice 42 - paid"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "PASS",
+                  "kept": 1,
+                  "readBack": "Invoice 42 - paid\n\n"
+                }
+              ],
+              "agreed": true
+            }
+          },
+          "structure": {
+            "tagged": false,
+            "marked": false,
+            "lang": false,
+            "title": false,
+            "altText": false,
+            "embeddedFont": false,
+            "encrypted": false
+          },
+          "capabilities": {
+            "forms": "yes",
+            "encrypt": "no API",
+            "tagged": "no API"
+          },
+          "bytes": 1269
+        },
+        {
+          "id": "pdfkit",
+          "name": "pdfkit",
+          "version": "0.15.2",
+          "installed": true,
+          "cases": {
+            "ar-basic": {
+              "status": "LOSSY",
+              "kept": 0,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "dV1bÖ(br (bvDc–'dFE"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "dV1bÖ(br�(bvDc–'dFE\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "ar-invoice": {
+              "status": "LOSSY",
+              "kept": 0.05,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "LOSSY",
+                  "kept": 0.047619047619047616,
+                  "readBack": "bvDd 'b¦Hc ) c BdR C\" Dc6Fb’ # #`"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "LOSSY",
+                  "kept": 0.047619047619047616,
+                  "readBack": "bvDd�'b¦Hc�) c�BdR�C\"�Dc6Fb’�#�#`\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "bidi-ar-latin": {
+              "status": "PARTIAL",
+              "kept": 0.5,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "PARTIAL",
+                  "kept": 0.5,
+                  "readBack": "Invoice 42: dV1bÖ(br (d2 ƒ 2ó# #b•"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "PARTIAL",
+                  "kept": 0.5,
+                  "readBack": "Invoice 42: dV1bÖ(br�(d2�ƒ�2ó#�#b•\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "bidi-he-latin": {
+              "status": "PARTIAL",
+              "kept": 0.67,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "PARTIAL",
+                  "kept": 0.6666666666666666,
+                  "readBack": "^•Ü]UÝ World 123"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "PARTIAL",
+                  "kept": 0.6666666666666666,
+                  "readBack": "^•Ü]UÝ World 123\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "he": {
+              "status": "LOSSY",
+              "kept": 0,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "^•Ü]UÝ ^%Õ]ÅÝ"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "^•Ü]UÝ ^%Õ]ÅÝ\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "hi-deva": {
+              "status": "LOSSY",
+              "kept": 0,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "’‰.“‰M’IG ’iA’‰?’ù>"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "’‰.“‰M’IG ’iA’‰?’ù>\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "th": {
+              "status": "LOSSY",
+              "kept": 0,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "â®'ã *áN5à®2â~Bâ^"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "â®'ã�*áN5à®2â~Bâ^�\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "zh-hans": {
+              "status": "LOSSY",
+              "kept": 0,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "O`Y}N uL"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "O`Y}N�uL\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "ja": {
+              "status": "LOSSY",
+              "kept": 0,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "0S0“0k0a0oN uL"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "0S0“0k0a0oN�uL\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "ko": {
+              "status": "LOSSY",
+              "kept": 0,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "ÅH±UÕXÁ8Æ” Á8¬Ä"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "ÅH±UÕXÁ8Æ” Á8¬Ä\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "el": {
+              "status": "LOSSY",
+              "kept": 0,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "LOSSY",
+                  "kept": 0.08333333333333333,
+                  "readBack": "93μ;“¬ <3¿<R š<ÃÃ;Ãμ"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "93µ;“¬ <3¿<R�š<ÃÃ;Ãµ\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "ru-cyr": {
+              "status": "LOSSY",
+              "kept": 0.1,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "LOSSY",
+                  "kept": 0.1,
+                  "readBack": "Aô@C„2CTB, CÄ8D"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "LOSSY",
+                  "kept": 0.1,
+                  "readBack": "Aô@C„2CTB, CÄ8D�\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "vi": {
+              "status": "PARTIAL",
+              "kept": 0.79,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "PARTIAL",
+                  "kept": 0.7857142857142857,
+                  "readBack": "Ti ¿ng Vi Çt có d ¥u"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "PARTIAL",
+                  "kept": 0.7857142857142857,
+                  "readBack": "Ti�¿ng Vi�Çt có d�¥u\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "ascii-control": {
+              "status": "PASS",
+              "kept": 1,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "PASS",
+                  "kept": 1,
+                  "readBack": "Invoice 42 - paid"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "PASS",
+                  "kept": 1,
+                  "readBack": "Invoice 42 - paid\n\n"
+                }
+              ],
+              "agreed": true
+            }
+          },
+          "structure": {
+            "tagged": false,
+            "marked": false,
+            "lang": false,
+            "title": false,
+            "altText": false,
+            "embeddedFont": false,
+            "encrypted": false
+          },
+          "capabilities": {
+            "forms": "no API",
+            "encrypt": "no API",
+            "tagged": "no API"
+          },
+          "bytes": 1220
+        }
+      ]
+    },
+    {
+      "label": "Embedded font (arial.ttf)",
+      "results": [
+        {
+          "id": "pdf-lib",
+          "name": "pdf-lib",
+          "version": "1.17.1",
+          "installed": true,
+          "cases": {
+            "ar-basic": {
+              "status": "PASS",
+              "kept": 1,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "PASS",
+                  "kept": 1,
+                  "readBack": "مرحبا بالعالم"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "PASS",
+                  "kept": 1,
+                  "readBack": "مرحبا بالعالم\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "ar-invoice": {
+              "status": "ORDER",
+              "kept": 1,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "ORDER",
+                  "kept": 1,
+                  "readBack": "الفاتورة رقم 24 لسنة 6202"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "ORDER",
+                  "kept": 1,
+                  "readBack": "6202  لسنة24 الفاتورة رقم\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "bidi-ar-latin": {
+              "status": "ORDER",
+              "kept": 1,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "ORDER",
+                  "kept": 1,
+                  "readBack": "Invoice 42: 03/2026( كب ابحرم)"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "ORDER",
+                  "kept": 1,
+                  "readBack": "Invoice 42: ( كب ابحرم03/2026)\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "bidi-he-latin": {
+              "status": "ORDER",
+              "kept": 1,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "ORDER",
+                  "kept": 1,
+                  "readBack": "321 dlroW שלום"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "ORDER",
+                  "kept": 1,
+                  "readBack": "321 dlroW שלום\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "he": {
+              "status": "PASS",
+              "kept": 1,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "PASS",
+                  "kept": 1,
+                  "readBack": "שלום עולם"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "PASS",
+                  "kept": 1,
+                  "readBack": "שלום עולם\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "hi-deva": {
+              "status": "LOSSY",
+              "kept": 0,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "\u0000\u0000\u0000\u0000\u0000\u0000 \u0000\u0000\u0000\u0000\u0000\u0000"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "������ ������\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "th": {
+              "status": "LOSSY",
+              "kept": 0,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "�\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "zh-hans": {
+              "status": "LOSSY",
+              "kept": 0,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "\u0000\u0000\u0000\u0000"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "�\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "ja": {
+              "status": "LOSSY",
+              "kept": 0,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "\u0000\u0000\u0000\u0000\u0000\u0000\u0000"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "�\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "ko": {
+              "status": "LOSSY",
+              "kept": 0,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "\u0000\u0000\u0000\u0000\u0000 \u0000\u0000"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "����� ��\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "el": {
+              "status": "PASS",
+              "kept": 1,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "PASS",
+                  "kept": 1,
+                  "readBack": "Γειά σου Κόσμε"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "PASS",
+                  "kept": 1,
+                  "readBack": "Γειά σου Κόσμε\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "ru-cyr": {
+              "status": "PASS",
+              "kept": 1,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "PASS",
+                  "kept": 1,
+                  "readBack": "Привет, мир"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "PASS",
+                  "kept": 1,
+                  "readBack": "Привет, мир\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "vi": {
+              "status": "PASS",
+              "kept": 1,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "PASS",
+                  "kept": 1,
+                  "readBack": "Tiếng Việt có dấu"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "PASS",
+                  "kept": 1,
+                  "readBack": "Tiếng Việt có dấu\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "ascii-control": {
+              "status": "PASS",
+              "kept": 1,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "PASS",
+                  "kept": 1,
+                  "readBack": "Invoice 42 - paid"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "PASS",
+                  "kept": 1,
+                  "readBack": "Invoice 42 - paid\n\n"
+                }
+              ],
+              "agreed": true
+            }
+          },
+          "structure": {
+            "tagged": false,
+            "marked": false,
+            "lang": false,
+            "title": false,
+            "altText": false,
+            "embeddedFont": true,
+            "encrypted": false
+          },
+          "capabilities": {
+            "forms": "yes",
+            "encrypt": "no API",
+            "tagged": "no API"
+          },
+          "bytes": 9603,
+          "subsetting": "ok"
+        },
+        {
+          "id": "cantoo",
+          "name": "@cantoo/pdf-lib",
+          "version": "2.11.1",
+          "installed": true,
+          "cases": {
+            "ar-basic": {
+              "status": "PASS",
+              "kept": 1,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "PASS",
+                  "kept": 1,
+                  "readBack": "مرحبا بالعالم"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "PASS",
+                  "kept": 1,
+                  "readBack": "مرحبا بالعالم\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "ar-invoice": {
+              "status": "ORDER",
+              "kept": 1,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "ORDER",
+                  "kept": 1,
+                  "readBack": "الفاتورة رقم 24 لسنة 6202"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "ORDER",
+                  "kept": 1,
+                  "readBack": "6202  لسنة24 الفاتورة رقم\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "bidi-ar-latin": {
+              "status": "ORDER",
+              "kept": 1,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "ORDER",
+                  "kept": 1,
+                  "readBack": "Invoice 42: 03/2026( كب ابحرم)"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "ORDER",
+                  "kept": 1,
+                  "readBack": "Invoice 42: ( كب ابحرم03/2026)\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "bidi-he-latin": {
+              "status": "ORDER",
+              "kept": 1,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "ORDER",
+                  "kept": 1,
+                  "readBack": "321 dlroW שלום"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "ORDER",
+                  "kept": 1,
+                  "readBack": "321 dlroW שלום\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "he": {
+              "status": "PASS",
+              "kept": 1,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "PASS",
+                  "kept": 1,
+                  "readBack": "שלום עולם"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "PASS",
+                  "kept": 1,
+                  "readBack": "שלום עולם\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "hi-deva": {
+              "status": "LOSSY",
+              "kept": 0,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "\u0000\u0000\u0000\u0000\u0000\u0000 \u0000\u0000\u0000\u0000\u0000\u0000"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "������ ������\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "th": {
+              "status": "LOSSY",
+              "kept": 0,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "������������\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "zh-hans": {
+              "status": "LOSSY",
+              "kept": 0,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "\u0000\u0000\u0000\u0000"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "����\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "ja": {
+              "status": "LOSSY",
+              "kept": 0,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "\u0000\u0000\u0000\u0000\u0000\u0000\u0000"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "�������\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "ko": {
+              "status": "LOSSY",
+              "kept": 0,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "\u0000\u0000\u0000\u0000\u0000 \u0000\u0000"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "����� ��\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "el": {
+              "status": "PASS",
+              "kept": 1,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "PASS",
+                  "kept": 1,
+                  "readBack": "Γειά σου Κόσμε"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "PASS",
+                  "kept": 1,
+                  "readBack": "Γειά σου Κόσμε\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "ru-cyr": {
+              "status": "PASS",
+              "kept": 1,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "PASS",
+                  "kept": 1,
+                  "readBack": "Привет, мир"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "PASS",
+                  "kept": 1,
+                  "readBack": "Привет, мир\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "vi": {
+              "status": "PASS",
+              "kept": 1,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "PASS",
+                  "kept": 1,
+                  "readBack": "Tiếng Việt có dấu"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "PASS",
+                  "kept": 1,
+                  "readBack": "Tiếng Việt có dấu\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "ascii-control": {
+              "status": "PASS",
+              "kept": 1,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "PASS",
+                  "kept": 1,
+                  "readBack": "Invoice 42 - paid"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "PASS",
+                  "kept": 1,
+                  "readBack": "Invoice 42 - paid\n\n"
+                }
+              ],
+              "agreed": true
+            }
+          },
+          "structure": {
+            "tagged": false,
+            "marked": false,
+            "lang": false,
+            "title": false,
+            "altText": false,
+            "embeddedFont": true,
+            "encrypted": false
+          },
+          "capabilities": {
+            "forms": "yes",
+            "encrypt": "no API",
+            "tagged": "no API"
+          },
+          "bytes": 629676,
+          "notes": [
+            "font subsetting failed: Cannot read properties of undefined (reading 'pos')"
+          ],
+          "subsetting": "failed — fell back to full embed"
+        },
+        {
+          "id": "pdfkit",
+          "name": "pdfkit",
+          "version": "0.15.2",
+          "installed": true,
+          "cases": {
+            "ar-basic": {
+              "status": "ORDER",
+              "kept": 1,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "ORDER",
+                  "kept": 1,
+                  "readBack": "بالعالممرحبا"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "ORDER",
+                  "kept": 1,
+                  "readBack": " بالعالممرحبا\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "ar-invoice": {
+              "status": "ORDER",
+              "kept": 1,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "ORDER",
+                  "kept": 1,
+                  "readBack": "2026لسنة 42رقم الفاتورة"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "ORDER",
+                  "kept": 1,
+                  "readBack": " رقم الفاتورة42  لسنة2026\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "bidi-ar-latin": {
+              "status": "ORDER",
+              "kept": 1,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "ORDER",
+                  "kept": 1,
+                  "readBack": "Invoice 42: 03/2026(بك مرحبا)"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "ORDER",
+                  "kept": 1,
+                  "readBack": "Invoice 42:  (بك مرحبا03/2026)\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "bidi-he-latin": {
+              "status": "DISPUTED",
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "ORDER",
+                  "kept": 1,
+                  "readBack": "World 123שלום"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "PASS",
+                  "kept": 1,
+                  "readBack": " שלוםWorld 123\n\n"
+                }
+              ],
+              "agreed": false,
+              "detail": "ORDER vs PASS"
+            },
+            "he": {
+              "status": "ORDER",
+              "kept": 1,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "ORDER",
+                  "kept": 1,
+                  "readBack": "עולםשלום"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "ORDER",
+                  "kept": 1,
+                  "readBack": " עולםשלום\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "hi-deva": {
+              "status": "LOSSY",
+              "kept": 0,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "\u0000\u0000\u0000\u0000\u0000\u0000 \u0000\u0000\u0000\u0000\u0000"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "������ �����\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "th": {
+              "status": "LOSSY",
+              "kept": 0,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "�����������\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "zh-hans": {
+              "status": "LOSSY",
+              "kept": 0,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "\u0000\u0000\u0000\u0000"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "����\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "ja": {
+              "status": "LOSSY",
+              "kept": 0,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "\u0000\u0000\u0000\u0000\u0000\u0000\u0000"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "�������\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "ko": {
+              "status": "LOSSY",
+              "kept": 0,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "\u0000\u0000\u0000\u0000\u0000 \u0000\u0000"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "LOSSY",
+                  "kept": 0,
+                  "readBack": "����� ��\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "el": {
+              "status": "PASS",
+              "kept": 1,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "PASS",
+                  "kept": 1,
+                  "readBack": "Γειά σου Κόσμε"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "PASS",
+                  "kept": 1,
+                  "readBack": "Γειά σου Κόσμε\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "ru-cyr": {
+              "status": "PASS",
+              "kept": 1,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "PASS",
+                  "kept": 1,
+                  "readBack": "Привет, мир"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "PASS",
+                  "kept": 1,
+                  "readBack": "Привет, мир\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "vi": {
+              "status": "PASS",
+              "kept": 1,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "PASS",
+                  "kept": 1,
+                  "readBack": "Tiếng Việt có dấu"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "PASS",
+                  "kept": 1,
+                  "readBack": "Tiếng Việt có dấu\n\n"
+                }
+              ],
+              "agreed": true
+            },
+            "ascii-control": {
+              "status": "PASS",
+              "kept": 1,
+              "perReferee": [
+                {
+                  "referee": "pdfjs",
+                  "status": "PASS",
+                  "kept": 1,
+                  "readBack": "Invoice 42 - paid"
+                },
+                {
+                  "referee": "mupdf",
+                  "status": "PASS",
+                  "kept": 1,
+                  "readBack": "Invoice 42 - paid\n\n"
+                }
+              ],
+              "agreed": true
+            }
+          },
+          "structure": {
+            "tagged": false,
+            "marked": false,
+            "lang": false,
+            "title": false,
+            "altText": false,
+            "embeddedFont": true,
+            "encrypted": false
+          },
+          "capabilities": {
+            "forms": "no API",
+            "encrypt": "no API",
+            "tagged": "no API"
+          },
+          "bytes": 9804
+        }
+      ]
+    }
+  ]
+}

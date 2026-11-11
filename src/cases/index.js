@@ -16,6 +16,10 @@
 export const TEXT_CASES = [
   { id: 'ar-basic', script: 'Arabic', class: 'non-latin', text: 'مرحبا بالعالم' },
   { id: 'ar-invoice', script: 'Arabic (mixed)', class: 'non-latin', text: 'الفاتورة رقم 42 لسنة 2026' },
+  // Mixed-direction runs are the harder case: a correct writer keeps logical
+  // order in the content stream even though the glyphs are placed right-to-left.
+  { id: 'bidi-ar-latin', script: 'Bidi: Arabic + Latin', class: 'bidi', text: 'Invoice 42: مرحبا بك (03/2026)' },
+  { id: 'bidi-he-latin', script: 'Bidi: Hebrew + Latin', class: 'bidi', text: 'שלום World 123' },
   { id: 'he', script: 'Hebrew', class: 'non-latin', text: 'שלום עולם' },
   { id: 'hi-deva', script: 'Devanagari', class: 'non-latin', text: 'नमस्ते दुनिया' },
   { id: 'th', script: 'Thai', class: 'non-latin', text: 'สวัสดีชาวโลก' },

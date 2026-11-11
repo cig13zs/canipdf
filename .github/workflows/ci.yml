@@ -4,19 +4,35 @@ on:
   push:
   pull_request:
   schedule:
-    - cron: '0 3 * * 1'   # weekly: catch regressions in a dependency
+    - cron: '0 3 * * 1'   # weekly: catch regressions introduced by a dependency
 
 jobs:
   matrix:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+
       - run: npm install --no-audit --no-fund
-      - name: Run conformance matrix
+
+      - name: Unit tests (classifier and adjudication)
+        run: node --test
+
+      - name: Conformance matrix (default fonts)
         run: node src/cli.js --md | tee results.md
+
+      - name: Conformance matrix (real Unicode font, if available)
+        run: |
+          FONT=/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf
+          if [ -f "$FONT" ]; then
+            node src/cli.js --font "$FONT" --md | tee results-font.md
+          else
+            echo "no system font found, skipping the font pass"
+          fi
+
       - name: Upload results
         uses: actions/upload-artifact@v4
         with:
@@ -24,3 +40,4 @@ jobs:
           path: |
             results.json
             results.md
+            results-font.md
