@@ -33,7 +33,7 @@ glyph origins are right — not that the document is beautiful.
 
 Full detail, including one retraction, in [FINDINGS.md](FINDINGS.md).
 
-### Solid: two libraries corrupt non-Latin text *silently*
+### Solid: three of four corrupt non-Latin text *silently*
 
 Default font, asked for Arabic, Hebrew, Devanagari, Thai, CJK, Greek or Cyrillic:
 
@@ -42,6 +42,7 @@ Default font, asked for Arabic, Hebrew, Devanagari, Thai, CJK, Greek or Cyrillic
 | `pdf-lib` | **throws** — `WinAnsi cannot encode "م" (0x0645)` |
 | `@cantoo/pdf-lib` | **does not throw.** Writes a PDF whose text is destroyed on read-back |
 | `pdfkit` | **does not throw.** Same silent loss |
+| `jspdf` | **does not throw.** Same silent loss |
 
 Both referees independently agree the output is lossy. The safety inversion is the
 finding: the library everyone forked *away* from is the only one that fails loudly.
@@ -151,7 +152,7 @@ A duplicate check against the trackers matters more than a findings list:
 - The fontkit pairing trap is [cantoo-scribe/pdf-lib#144](https://github.com/cantoo-scribe/pdf-lib/issues/144) and [#151](https://github.com/cantoo-scribe/pdf-lib/issues/151), closed.
 
 Nothing here was filed upstream, because filing duplicates is noise. **What no one
-publishes is the matrix**: the same fixtures, the same fonts, three libraries, two
+publishes is the matrix**: the same fixtures, the same fonts, four libraries, two
 independent extractors. That is the contribution, and it is a table.
 
 ## The matrices

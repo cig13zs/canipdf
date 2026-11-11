@@ -120,7 +120,7 @@ An earlier version of this file said visual RTL correctness was untestable here.
 It now is: MuPDF's structured-text walker reports a per-character origin, so
 `glyphPlacement()` checks whether successive RTL glyphs move right-to-left.
 
-Result with an embedded font: **all three libraries place RTL glyphs correctly**
+Result with an embedded font: **all four libraries place RTL glyphs correctly**
 (`rtl` on every RTL row, decreasing x for every consecutive pair). The visual
 rendering was never the problem — an earlier claim that implied otherwise is
 withdrawn.
@@ -138,7 +138,7 @@ That is worse than either failure alone, because the preview is fine.
 Still not measured: correct bidi **layout** of mixed-direction runs. Placement is
 verified for single-script runs only.
 
-### H1 — Mixed-direction text returns reordered, in all three libraries
+### H1 — Mixed-direction text returns reordered, in every library tested
 
 **Why it is held:** the referees disagree. For `pdfkit` + Hebrew/Latin,
 `pdfjs-dist` reports reordered and MuPDF reports a clean pass — reported as
