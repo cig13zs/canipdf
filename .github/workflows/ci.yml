@@ -1,0 +1,26 @@
+name: conformance
+
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: '0 3 * * 1'   # weekly: catch regressions in a dependency
+
+jobs:
+  matrix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install --no-audit --no-fund
+      - name: Run conformance matrix
+        run: node src/cli.js --md | tee results.md
+      - name: Upload results
+        uses: actions/upload-artifact@v4
+        with:
+          name: canipdf-results
+          path: |
+            results.json
+            results.md
