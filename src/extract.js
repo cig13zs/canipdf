@@ -92,6 +92,80 @@ export async function extractAll(bytes) {
 
 const norm = (s) => (s ?? '').normalize('NFC').replace(/\s+/gu, '');
 
+/** Hebrew, Arabic, Syriac, Thaana, NKo and the presentation-form blocks. */
+export function isRtlChar(ch) {
+  const cp = ch.codePointAt(0) ?? 0;
+  return (
+    (cp >= 0x0590 && cp <= 0x08ff) ||
+    (cp >= 0xfb1d && cp <= 0xfdff) ||
+    (cp >= 0xfe70 && cp <= 0xfeff)
+  );
+}
+
+export const hasRtl = (s) => [...(s ?? '')].some(isRtlChar);
+
+/**
+ * Where did the glyphs physically go?
+ *
+ * Round-trip comparison proves the content stream kept logical order. It says
+ * nothing about placement: a writer can emit the correct codepoints in the
+ * correct order and still lay them out left-to-right, producing a document that
+ * reads backwards. MuPDF's structured-text walker reports a per-character origin
+ * and bidi level, so this is measurable without a reference render.
+ *
+ * direction:
+ *   'rtl'   successive RTL glyphs move right-to-left — placed correctly
+ *   'ltr'   successive RTL glyphs move left-to-right — visually reversed
+ *   'none'  no RTL characters in the document
+ *   'unknown' nothing measurable
+ */
+export async function glyphPlacement(bytes) {
+  let mupdf;
+  try {
+    mupdf = await import('mupdf');
+  } catch {
+    return { direction: 'unknown', reason: 'mupdf not installed' };
+  }
+
+  let doc;
+  try {
+    doc = mupdf.Document.openDocument(new Uint8Array(bytes), 'application/pdf');
+    const page = doc.loadPage(0);
+    const st = page.toStructuredText('preserve-whitespace');
+    const chars = [];
+    st.walk({
+      onChar(c, origin) {
+        chars.push({ c, x: origin[0] });
+      },
+    });
+
+    const rtl = chars.filter((ch) => isRtlChar(ch.c));
+    if (rtl.length < 2) return { direction: 'none', glyphs: chars.length };
+
+    let decreasing = 0;
+    let increasing = 0;
+    for (let i = 1; i < rtl.length; i++) {
+      const dx = rtl[i].x - rtl[i - 1].x;
+      if (dx < 0) decreasing++;
+      else if (dx > 0) increasing++;
+    }
+    return {
+      direction: decreasing >= increasing ? 'rtl' : 'ltr',
+      glyphs: chars.length,
+      decreasing,
+      increasing,
+    };
+  } catch (e) {
+    return { direction: 'unknown', reason: String(e?.message ?? e).slice(0, 80) };
+  } finally {
+    try {
+      doc?.destroy();
+    } catch {
+      /* ignore */
+    }
+  }
+}
+
 /**
  * Compare what went in with what came out.
  *

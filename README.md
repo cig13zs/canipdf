@@ -18,14 +18,14 @@ Latest results are committed: [`docs/results-2026-11-11.md`](docs/results-2026-1
 
 Read this before citing anything below.
 
-**It measures** whether the bytes a library wrote survive a round trip: render a
-string, read it back with engines from a different codebase, compare codepoints.
+**It measures** two things about the bytes a library wrote: whether the text
+survives a round trip through independent extractors (what copy-paste, search and
+text ingestion will see), and where the glyphs were physically placed (what the
+page looks like).
 
-**It does not measure whether the document looks right.** A library can write
-logical order into the content stream and still place every glyph left-to-right,
-producing a visually broken document that this tool scores as `pass`. Settling
-that needs position-aware comparison, which does not exist here yet. Every
-right-to-left claim below is marked accordingly.
+**It does not measure** correct bidi *layout* of mixed-direction runs, line
+breaking, or visual fidelity in general. A `pass` means the content stream and
+glyph origins are right — not that the document is beautiful.
 
 ---
 
@@ -89,16 +89,37 @@ longer be misreported as a library defect. What survives is a modest documentati
 gap: carrying a `@pdf-lib/fontkit` import from `pdf-lib` to the fork crashes with
 no diagnostic.
 
-### Held: mixed-direction text is reordered, by all three
+### Measured, not assumed: RTL looks right, but `pdfkit` documents *extract* wrong
 
-With an embedded font, mixed Arabic/Latin and Hebrew/Latin content comes back in a
-different order from the input — `Invoice 42: 03/2026( كب ابحرم)` for
-`Invoice 42: مرحبا بك (03/2026)`.
+This harness reports two independent axes, because they fail differently:
 
-**Why it is not filed:** the referees disagree. On `pdfkit` + Hebrew/Latin,
-`pdfjs-dist` says reordered and MuPDF says clean pass — the cell below is reported
-as `disputed`. When two readers disagree about what the document says, the ordering
-claim is not established, and it stays out of the issue tracker.
+- **extraction order** — the round trip above. This is what copy-paste, search,
+  text indexing and LLM ingestion actually see.
+- **glyph placement** — read from MuPDF's per-character origins. This is whether
+  the document *looks* right.
+
+With an embedded font the results separate cleanly:
+
+| right-to-left script | pdf-lib | @cantoo/pdf-lib | pdfkit |
+|---|---|---|---|
+| Arabic | rtl | rtl | rtl |
+| Bidi: Arabic + Latin | rtl | rtl | rtl |
+| Hebrew | rtl | rtl | rtl |
+
+**All three place RTL glyphs correctly.** The visual rendering is not the problem,
+and an earlier draft of this README that implied otherwise was wrong. The problem
+is the other axis: `pdfkit` writes Arabic and Hebrew such that extraction returns
+the characters reordered, while `pdf-lib` and the fork return them exact. So text
+copied out of a `pdfkit` document — or indexed by a search engine, or fed to a
+model — comes back scrambled, while the printed page looks perfect.
+
+Mixed-direction content (Arabic or Hebrew embedded in Latin) extracts reordered in
+all three, and one cell is reported as `disputed` because the two referees disagree.
+That is held, not filed.
+
+Corroboration that the placement axis works: in the **default-font** pass,
+`@cantoo/pdf-lib` and `pdfkit` score `none` for placement — the RTL glyphs are not
+in the output at all. Silent loss, measured from the other direction.
 
 ---
 
@@ -205,7 +226,10 @@ that is the finding.
 
 ## Limits
 
-- **Content-stream order only.** Visual correctness is untested (see the top of this file).
+- **Two axes, not one.** Extraction order (what copy-paste and search see) is
+  measured by round trip; glyph placement (what the page looks like) by MuPDF
+  character origins. Placement is checked for single-script runs only — correct
+  bidi *layout* of mixed runs remains unmeasured.
 - **Two referees are not a proof.** They share similar design assumptions; agreement raises confidence rather than establishing fact. Disagreements are surfaced as `disputed`, never averaged.
 - **Yes/no capabilities are not propagation.** A library that needs a plugin to tag output is scored `no API` — read that as "not out of the box".
 - **One page, one line, default size.** Layout-sensitive behaviour is out of scope.

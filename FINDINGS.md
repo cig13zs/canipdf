@@ -88,22 +88,36 @@ of the box", never "impossible". Check for an extension package before filing.
 
 ## HOLD — do not file
 
-### H1 — Mixed-direction text comes back reordered
+### Resolved by measurement — glyph placement
 
-With an embedded font, mixed Arabic/Latin and Hebrew/Latin content returns in a
-different order than it went in, across all three libraries.
+An earlier version of this file said visual RTL correctness was untestable here.
+It now is: MuPDF's structured-text walker reports a per-character origin, so
+`glyphPlacement()` checks whether successive RTL glyphs move right-to-left.
+
+Result with an embedded font: **all three libraries place RTL glyphs correctly**
+(`rtl` on every RTL row, decreasing x for every consecutive pair). The visual
+rendering was never the problem — an earlier claim that implied otherwise is
+withdrawn.
+
+What the two axes show together:
+
+| axis | pdf-lib | @cantoo/pdf-lib | pdfkit |
+|---|---|---|---|
+| glyph placement (looks right) | rtl | rtl | rtl |
+| extraction order (copy-paste, search, ingest) | pass | pass | **order** |
+
+So `pdfkit` produces a document that *looks* correct and *reads back* scrambled.
+That is worse than either failure alone, because the preview is fine.
+
+Still not measured: correct bidi **layout** of mixed-direction runs. Placement is
+verified for single-script runs only.
+
+### H1 — Mixed-direction text returns reordered, in all three libraries
 
 **Why it is held:** the referees disagree. For `pdfkit` + Hebrew/Latin,
-`pdfjs-dist` reports reordered and MuPDF reports a clean pass — that cell is
-reported as `disputed` rather than averaged. When two readers disagree about what
-a document says, an ordering claim is not established.
-
-### H2 — Visual RTL correctness is untested, by design
-
-A `pass` on right-to-left text proves the *content stream* kept logical order. It
-does not prove the glyphs were placed right-to-left. A library can score `pass`
-here and still render a reversed document. Any RTL claim beyond "the bytes contain
-the right codepoints in the right sequence" needs position-aware extraction.
+`pdfjs-dist` reports reordered and MuPDF reports a clean pass — reported as
+`disputed` rather than averaged. Ordering of mixed runs is genuinely contested
+even between extractors, so it is not a claim worth filing.
 
 ---
 

@@ -14,7 +14,7 @@
 
 import { writeFileSync } from 'node:fs';
 import { TEXT_CASES, STRUCTURE_MARKERS, STRUCTURE_LABELS } from './cases/index.js';
-import { extractAll, adjudicate, REFEREES } from './extract.js';
+import { extractAll, adjudicate, glyphPlacement, hasRtl, REFEREES } from './extract.js';
 import { ADAPTERS } from './adapters/index.js';
 
 const args = process.argv.slice(2);
@@ -109,7 +109,14 @@ async function runAdapter(adapter, ctx) {
     try {
       const out = await adapter.generate(c.text, ctx);
       const bytes = out?.bytes ?? out;
-      result.cases[c.id] = adjudicate(c.text, await extractAll(bytes));
+      const verdict = adjudicate(c.text, await extractAll(bytes));
+      // Placement is a separate axis from extraction: a document can look right
+      // and still read back in the wrong order (or vice versa).
+      if (hasRtl(c.text)) {
+        const g = await glyphPlacement(bytes);
+        verdict.placement = g.direction;
+      }
+      result.cases[c.id] = verdict;
     } catch (e) {
       result.cases[c.id] = { status: 'ERR', detail: String(e?.message ?? e).slice(0, 110) };
     }
@@ -133,8 +140,29 @@ function mdFiles(results, heading) {
     });
     lines.push(`| ${c.script} | ${cells.join(' | ')} |`);
   }
+  const rtlCases = TEXT_CASES.filter((c) => hasRtl(c.text));
+  if (rtlCases.length) {
+    lines.push('');
+    lines.push('**Glyph placement** (MuPDF per-character origins): `rtl` glyphs move');
+    lines.push('right-to-left, i.e. visually correct. This is a different axis from the');
+    lines.push('table above: a document can be drawn correctly and still extract in the');
+    lines.push('wrong order, which is what copy-paste, search and text ingestion see.');
+    lines.push('');
+    lines.push(`| right-to-left script | ${live.map((r) => r.name).join(' | ')} |`);
+    lines.push(`|---|${live.map(() => '---').join('|')}|`);
+    for (const c of rtlCases) {
+      const cells = live.map((r) => {
+        const v = r.cases[c.id];
+        if (!v?.placement) return v?.status === 'ERR' ? '—' : 'n/a';
+        return v.placement === 'ltr' ? '**ltr**' : v.placement;
+      });
+      lines.push(`| ${c.script} | ${cells.join(' | ')} |`);
+    }
+  }
+
   lines.push('');
-  lines.push('| structure / API | ' + live.map((r) => r.name).join(' | ') + ' |');
+  lines.push(`#### ${heading} — structure and API`);
+  lines.push(`| property | ${live.map((r) => r.name).join(' | ')} |`);
   lines.push(`|---|${live.map(() => '---').join('|')}|`);
   for (const [key, label] of STRUCTURE_LABELS) {
     lines.push(`| ${label} | ${live.map((r) => yesNo(r.structure?.[key])).join(' | ')} |`);
