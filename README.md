@@ -31,25 +31,7 @@ right-to-left claim below is marked accordingly.
 
 ## The findings
 
-Two are solid enough to file upstream. Two are held back, and the difference is
-deliberate — see [FINDINGS.md](FINDINGS.md).
-
-### Solid: the maintained fork breaks font subsetting — 65x larger files
-
-`@cantoo/pdf-lib` exists because `pdf-lib` crashes on non-Latin text. It fixed the
-crash. But embedding a Unicode font with the fontkit the ecosystem installs by
-default (`@pdf-lib/fontkit` 1.1.1):
-
-| library | `subset: true` | file size, one page |
-|---|---|---|
-| `pdf-lib` | ok | **9.4 KB** |
-| `@cantoo/pdf-lib` | **throws** `Cannot read properties of undefined (reading 'pos')`, falls back to full embed | **614.9 KB** |
-| `pdfkit` | ok | 9.6 KB |
-
-The fork declares no fontkit of its own, so it inherits the caller's. If the
-caller has the standard one, subsetting dies and every document carries an entire
-font. This needs no referee: it throws before a PDF exists, and the rest is a byte
-count.
+Full detail, including one retraction, in [FINDINGS.md](FINDINGS.md).
 
 ### Solid: two libraries corrupt non-Latin text *silently*
 
@@ -61,9 +43,10 @@ Default font, asked for Arabic, Hebrew, Devanagari, Thai, CJK, Greek or Cyrillic
 | `@cantoo/pdf-lib` | **does not throw.** Writes a PDF whose text is destroyed on read-back |
 | `pdfkit` | **does not throw.** Same silent loss |
 
-A thrown error is a bug you find in five minutes. A PDF that prints as empty boxes
-on an invoice is a bug you find from a customer. Only one of these three fails
-loudly, and it is the one everyone forked away from.
+Both referees independently agree the output is lossy. The safety inversion is the
+finding: the library everyone forked *away* from is the only one that fails loudly.
+A thrown error is a bug you find in five minutes; a PDF that prints as empty boxes
+on an invoice is a bug you find from a customer.
 
 ### Solid: none of them can produce an accessible document
 
@@ -80,10 +63,31 @@ alt text, and none exposes a tagging API. Read from raw bytes, no referee involv
 | tagging API | no API | no API | no API |
 | encryption API | no API | no API | no API |
 | AcroForm API | yes | yes | no API |
+| font subsetting | ok | ok | n/a (default font) |
+| fontkit used | `@pdf-lib/fontkit@1.1.1` | `fontkit@2.0.4` | — |
+| file size (1 page) | 9.4 KB | 9.4 KB | 9.6 KB |
 
 Not a PDF/UA verdict — a document can carry all of these and still fail. These are
 the triage gate, and generate a PDF with any of these three today and it cannot
-conform, by construction.
+conform, by construction. Read the API rows as "not out of the box"; a library that
+needs a plugin to tag output is scored `no API`, not `impossible`.
+
+### Retracted: "the fork breaks font subsetting"
+
+An earlier run of this harness reported that `@cantoo/pdf-lib` throws on
+`subset: true` and produces 614.9 KB against `pdf-lib`'s 9.4 KB — a 65x regression.
+
+**That was my bug, not theirs.** The fork expects fontkit **2.x**; `pdf-lib`
+projects carry `@pdf-lib/fontkit` **1.1.1**, which is what my adapter handed it.
+Paired correctly, the fork subsets fine at 9.4 KB. It was caught by a duplicate
+check before filing: `cantoo-scribe/pdf-lib#144` and `#151` already document both
+the fontkit version requirement and the 2.x default-export change.
+
+The harness now tries every installed fontkit per library and **records which one
+each library needed** in the `fontkit used` row, so a dependency mismatch can no
+longer be misreported as a library defect. What survives is a modest documentation
+gap: carrying a `@pdf-lib/fontkit` import from `pdf-lib` to the fork crashes with
+no diagnostic.
 
 ### Held: mixed-direction text is reordered, by all three
 

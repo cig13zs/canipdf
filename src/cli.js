@@ -88,6 +88,7 @@ async function runAdapter(adapter, ctx) {
     result.bytes = bytes.length;
     if (out?.notes?.length) result.notes = out.notes;
     if (out?.subsetting) result.subsetting = out.subsetting;
+    if (out?.fontkit) result.fontkit = out.fontkit;
   } catch (e) {
     const msg = String(e?.message ?? e);
     if (/Cannot find (module|package)/i.test(msg)) {
@@ -143,6 +144,9 @@ function mdFiles(results, heading) {
   );
   lines.push(
     `| font subsetting | ${live.map((r) => r.subsetting ?? (r.structure ? 'n/a (default font)' : '—')).join(' | ')} |`,
+  );
+  lines.push(
+    `| fontkit used | ${live.map((r) => r.fontkit ?? '—').join(' | ')} |`,
   );
   lines.push(
     `| file size (1 page) | ${live.map((r) => (r.bytes ? `${(r.bytes / 1024).toFixed(1)} KB` : '—')).join(' | ')} |`,

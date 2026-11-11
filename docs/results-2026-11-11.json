@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-11T09:33:24.766Z",
+  "generatedAt": "2026-11-11T09:39:06.627Z",
   "node": "v24.21.0",
   "referees": [
     "pdfjs",
@@ -974,7 +974,11 @@
             "tagged": "no API"
           },
           "bytes": 9603,
-          "subsetting": "ok"
+          "notes": [
+            "fontkit: _this.subset.encodeStream is not a function"
+          ],
+          "subsetting": "ok",
+          "fontkit": "@pdf-lib/fontkit@1.1.1"
         },
         {
           "id": "cantoo",
@@ -1110,7 +1114,7 @@
                   "referee": "mupdf",
                   "status": "LOSSY",
                   "kept": 0,
-                  "readBack": "������������\n\n"
+                  "readBack": "�\n\n"
                 }
               ],
               "agreed": true
@@ -1129,7 +1133,7 @@
                   "referee": "mupdf",
                   "status": "LOSSY",
                   "kept": 0,
-                  "readBack": "����\n\n"
+                  "readBack": "�\n\n"
                 }
               ],
               "agreed": true
@@ -1148,7 +1152,7 @@
                   "referee": "mupdf",
                   "status": "LOSSY",
                   "kept": 0,
-                  "readBack": "�������\n\n"
+                  "readBack": "�\n\n"
                 }
               ],
               "agreed": true
@@ -1263,11 +1267,9 @@
             "encrypt": "no API",
             "tagged": "no API"
           },
-          "bytes": 629676,
-          "notes": [
-            "font subsetting failed: Cannot read properties of undefined (reading 'pos')"
-          ],
-          "subsetting": "failed — fell back to full embed"
+          "bytes": 9645,
+          "subsetting": "ok",
+          "fontkit": "fontkit@2.0.4"
         },
         {
           "id": "pdfkit",

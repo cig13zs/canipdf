@@ -31,6 +31,28 @@ function pkgVersion(pkg) {
   }
 }
 
+/**
+ * Fontkit candidates, in the order we try them.
+ *
+ * `@pdf-lib/fontkit` is 1.x and is what most pdf-lib projects have today;
+ * `fontkit` is 2.x and is what the maintained fork was fixed against. Pairing
+ * the wrong one is a documented trap (cantoo-scribe/pdf-lib#144, #151), so the
+ * harness tries both and records which one each library actually needed —
+ * otherwise a dependency mismatch gets reported as a library bug.
+ */
+const FONTKITS = [
+  { id: 'fontkit', resolve: async () => { const m = await import('fontkit'); return m.default ?? m; } },
+  { id: '@pdf-lib/fontkit', resolve: async () => (await import('@pdf-lib/fontkit')).default },
+];
+
+function fontkitVersion(id) {
+  try {
+    return JSON.parse(require('node:fs').readFileSync(require('node:path').join(process.cwd(), 'node_modules', id, 'package.json'), 'utf8')).version;
+  } catch {
+    return '?';
+  }
+}
+
 const pdfLibFamily = (pkg) => ({
   async generate(text, ctx = {}) {
     const { PDFDocument, StandardFonts } = await import(pkg);
@@ -51,26 +73,40 @@ const pdfLibFamily = (pkg) => ({
       return { bytes, notes };
     }
 
-    const fontkit = (await import('@pdf-lib/fontkit')).default;
     const fontBytes = await readFile(ctx.fontPath);
-    const register = (doc) => doc.registerFontkit(fontkit);
 
-    try {
-      const bytes = await build(async (doc) => {
-        register(doc);
-        return doc.embedFont(fontBytes, { subset: true });
-      });
-      return { bytes, notes, subsetting: 'ok' };
-    } catch (e) {
-      // A real finding, not a harness failure: record it, then retry without
-      // subsetting so the text column can still be measured.
-      notes.push(`font subsetting failed: ${String(e?.message ?? e).slice(0, 80)}`);
-      const bytes = await build(async (doc) => {
-        register(doc);
-        return doc.embedFont(fontBytes, { subset: false });
-      });
-      return { bytes, notes, subsetting: 'failed — fell back to full embed' };
+    // Try each fontkit with subsetting; first one that works wins.
+    for (const candidate of FONTKITS) {
+      try {
+        const kit = await candidate.resolve();
+        const bytes = await build(async (doc) => {
+          doc.registerFontkit(kit);
+          return doc.embedFont(fontBytes, { subset: true });
+        });
+        return {
+          bytes,
+          notes,
+          fontkit: `${candidate.id}@${fontkitVersion(candidate.id)}`,
+          subsetting: 'ok',
+        };
+      } catch (e) {
+        notes.push(`${candidate.id}: ${String(e?.message ?? e).slice(0, 70)}`);
+      }
     }
+
+    // Nothing could subset. Fall back to a full embed so the text column is
+    // still measurable, and say so loudly — the file size will show it.
+    const kit = await FONTKITS[0].resolve();
+    const bytes = await build(async (doc) => {
+      doc.registerFontkit(kit);
+      return doc.embedFont(fontBytes, { subset: false });
+    });
+    return {
+      bytes,
+      notes,
+      fontkit: `${FONTKITS[0].id}@${fontkitVersion(FONTKITS[0].id)}`,
+      subsetting: 'failed — fell back to full embed',
+    };
   },
 
   async capabilities() {
