@@ -12,20 +12,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 11
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: pnpm
 
-      # pnpm with the committed lockfile: the numbers in docs/ must be
-      # reproducible, which means the dependency tree must be pinned.
-      - run: pnpm install --frozen-lockfile
+      # Dependency versions are pinned exactly in package.json, so the numbers in
+      # docs/ are reproducible without depending on a lockfile format.
+      - run: npm install --no-audit --no-fund
 
       - name: Unit tests (classifier, adjudication, capability observer, RTL)
-        run: pnpm test
+        run: npm test
 
       - name: Conformance matrix (default fonts)
         run: node src/cli.js --md | tee results.md
@@ -39,7 +35,7 @@ jobs:
             echo "no system font found, skipping the font pass"
           fi
 
-      # The packaging is part of the product: a bin that cannot be installed is a
+      # Packaging is part of the product: a bin that cannot be installed is a
       # broken release. Install the packed tarball in a clean dir and run it there.
       - name: Packaging smoke test
         run: |
