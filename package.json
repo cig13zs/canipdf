@@ -7,8 +7,9 @@
     "canipdf": "src/cli.js"
   },
   "scripts": {
-    "test": "node src/cli.js",
-    "matrix": "node src/cli.js --md"
+    "test": "node --test",
+    "matrix": "node src/cli.js --md",
+    "matrix:font": "node src/cli.js --font ./test/fonts/NotoSans-Regular.ttf --md"
   },
   "keywords": [
     "pdf",
