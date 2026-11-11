@@ -3,6 +3,12 @@
 Three observations survived scrutiny. One did not, and the retraction is the most
 useful part of this file.
 
+**Read this first:** a duplicate check afterwards showed that most of what looked
+like discoveries are already-known, open issues (see *Prior art* at the bottom).
+That does not make them false — the harness independently reproduces them — but it
+does mean **this repository's value is the matrix and the harness, not the bug
+reports.** Nothing here was filed upstream, because filing duplicates is noise.
+
 Environment: Node v24.21.0 · `pdf-lib` 1.17.1 · `@cantoo/pdf-lib` 2.11.1 ·
 `pdfkit` 0.15.2 · referees `pdfjs-dist` 4.10.38 **and** MuPDF 1.28.6 ·
 font Arial (covers Latin, Greek, Cyrillic, Arabic, Hebrew, Vietnamese;
@@ -107,3 +113,29 @@ the right codepoints in the right sequence" needs position-aware extraction.
 bounding boxes. Assert that inside an RTL run, increasing logical index yields
 decreasing x. That converts "the order looks wrong" into "the glyphs are at the
 wrong coordinates" — a claim that can be filed. Until then, both stay here.
+
+---
+
+## Prior art — why none of this was filed
+
+Checked against the trackers on 2026-11-11:
+
+| my label | existing issue | state | relation |
+|---|---|---|---|
+| S1 (pdfkit silent loss) | [foliojs/pdfkit#1251](https://github.com/foliojs/pdfkit/issues/1251) — "non-Latin characters, non-BMP characters, symbols missing" | open since 2021-07-18 | **duplicate** |
+| H2 (pdfkit RTL) | [foliojs/pdfkit#219](https://github.com/foliojs/pdfkit/issues/219) — "Right-to-Left (RTL) support for Hebrew and Arabic" | open | **duplicate** |
+| H2 (pdfkit shaping) | [foliojs/pdfkit#951](https://github.com/foliojs/pdfkit/issues/951) — ZWJ for cursive scripts | open since 2019 | **duplicate** |
+| retraction (fontkit pairing) | [cantoo-scribe/pdf-lib#144](https://github.com/cantoo-scribe/pdf-lib/issues/144), [#151](https://github.com/cantoo-scribe/pdf-lib/issues/151) | closed | **already answered** |
+| S2 (no tagging API) | no equivalent found | — | the only one without prior art, and the least actionable: "support PDF/UA" is a roadmap request, not a bug report |
+
+**The lesson, which cost me a near-miss false accusation:** search the target
+tracker *before* writing the report, not after. The fork's subsetting "bug" had
+been answered in a closed issue five weeks earlier, and pdfkit's Unicode gap has
+been open for five years — both would have been noise at best and embarrassing at
+worst.
+
+What is genuinely not covered by prior art is the **cross-library matrix** itself:
+no one publishes "here is what each of these three actually does, on the same
+fixtures, with the same fonts, verified by two independent extractors." That is
+the contribution, and it is a table, not a bug.
+

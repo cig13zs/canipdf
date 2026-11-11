@@ -102,6 +102,18 @@ claim is not established, and it stays out of the issue tracker.
 
 ---
 
+### Prior art — these are known issues, measured rather than discovered
+
+A duplicate check against the trackers matters more than a findings list:
+
+- `pdfkit` silent Unicode loss is [foliojs/pdfkit#1251](https://github.com/foliojs/pdfkit/issues/1251), open since 2021.
+- `pdfkit` RTL is [foliojs/pdfkit#219](https://github.com/foliojs/pdfkit/issues/219), open, and shaping is [#951](https://github.com/foliojs/pdfkit/issues/951).
+- The fontkit pairing trap is [cantoo-scribe/pdf-lib#144](https://github.com/cantoo-scribe/pdf-lib/issues/144) and [#151](https://github.com/cantoo-scribe/pdf-lib/issues/151), closed.
+
+Nothing here was filed upstream, because filing duplicates is noise. **What no one
+publishes is the matrix**: the same fixtures, the same fonts, three libraries, two
+independent extractors. That is the contribution, and it is a table.
+
 ## The matrices
 
 Reproduce with `node src/cli.js --font ./your-font.ttf`. `pass` exact · `order` all
